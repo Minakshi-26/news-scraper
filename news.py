@@ -29,18 +29,15 @@ def scrape_toi():
     headlines = soup.find_all(["h3", "span"])
     return [h.get_text(strip=True) for h in headlines if h.get_text(strip=True)]
 
-# Collect headlines
 news_data = {
     "BBC News": scrape_bbc(),
     "Hindustan Times": scrape_hindustantimes(),
     "Times of India": scrape_toi()
 }
 
-# Create timestamped filename
 timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M")
 filename = f"headlines_{timestamp}.txt"
 
-# Remove duplicates & save
 seen = set()
 with open(filename, "w", encoding="utf-8") as file:
     for source, headlines in news_data.items():
